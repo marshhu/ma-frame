@@ -13,17 +13,15 @@ import (
 
 type App struct{
 	Engine *gin.Engine
-	HostPort string
-	HostPath string
+	HostPort int
 }
 
 var Instance *App
 
 //构建App
-func NewApp(hostPort,hostPath string) *App{
+func NewApp(hostPort int) *App{
 	app := &App{
 		HostPort: hostPort,
-		HostPath: hostPath,
 	}
 	Instance = app
   return Instance
@@ -31,13 +29,14 @@ func NewApp(hostPort,hostPath string) *App{
 
 //注册路由
 func(a *App)RegisterRouter(router func(eng *gin.Engine) error) *App{
+     a.Engine = gin.New()
      router(a.Engine)
      return a
 }
 
 //启动服务
 func(a *App)Run(){
-	host := fmt.Sprintf(":%s", a.HostPort)
+	host := fmt.Sprintf(":%d", a.HostPort)
 	s := &http.Server{
 		Addr:           host,
 		Handler:        a.Engine,
