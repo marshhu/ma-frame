@@ -67,7 +67,6 @@ func (t *MaDB) Raw(sql string, values ...interface{}) *MaDB {
 	return t
 }
 
-
 // Joins specify Joins conditions
 // rows, err := db.Table("users").Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Rows()
 // db.Table("users").Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Scan(&results)

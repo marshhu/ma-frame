@@ -20,11 +20,11 @@ type DbSettings struct {
 	ConnMaxLifetime int // 分钟
 }
 
-type MaDB struct{
-	db *gorm.DB
-	dbName           string
-	Error            error
-	RowsAffected     int64 // 受影响行数
+type MaDB struct {
+	db           *gorm.DB
+	dbName       string
+	Error        error
+	RowsAffected int64 // 受影响行数
 }
 
 var defaultKey string

@@ -66,4 +66,3 @@ func InitDBWithDbName(conf *DbSettings, dbName string) error {
 
 	return nil
 }
-

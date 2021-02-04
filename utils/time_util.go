@@ -59,5 +59,3 @@ func timeFormat(val time.Time, layout string) string {
 	}
 	return val.Format(layout)
 }
-
-
