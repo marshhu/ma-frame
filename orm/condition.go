@@ -1,6 +1,9 @@
 package orm
 
-import multierror "github.com/hashicorp/go-multierror"
+import (
+	multierror "github.com/hashicorp/go-multierror"
+	"reflect"
+)
 
 // Table 设置表名
 func (t *MaDB) Table(tableName string) *MaDB {
@@ -29,6 +32,22 @@ func (t *MaDB) Select(query interface{}, args ...interface{}) *MaDB {
 
 	t.db = clone
 
+	return t
+}
+
+// 获取第一个匹配记录
+// db.Where("name = ?", "jinzhu").First(&user)
+// SELECT * FROM users WHERE name = 'jinzhu' limit 1;
+
+// 获取所有匹配记录
+// db.Where("name = ?", "jinzhu").Find(&users)
+func (t *MaDB) Where(query interface{}, args ...interface{}) *MaDB {
+	clone := t.db.Where(query, args...)
+
+	if clone.Error != nil {
+		t.Error = multierror.Append(t.Error, clone.Error)
+	}
+	t.db = clone
 	return t
 }
 
