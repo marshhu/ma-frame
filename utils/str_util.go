@@ -13,10 +13,6 @@ func ToInt64(val string) (int64, error) {
 	return strconv.ParseInt(val, 10, 64)
 }
 
-func ToBool(val string) (bool, error) {
-	return strconv.ParseBool(val)
-}
-
 func ToUInt(val string) (uint, error) {
 	temp, err := strconv.Atoi(val)
 	if err != nil {
@@ -73,4 +69,19 @@ func SplitToInt(val string, ch rune) []int64 {
 
 func Trim(val string) string {
 	return strings.Trim(val, " ")
+}
+
+// ToBool
+func ToBool(val string) (bool, error) {
+	return strconv.ParseBool(val)
+}
+
+// BoolToString
+func BoolToString(val bool) string {
+	return strconv.FormatBool(val)
+}
+
+// 为空判断
+func IsEmpty(str string) (isEmpty bool) {
+	return len(Trim(str)) == 0
 }
