@@ -2,7 +2,6 @@ package orm
 
 import (
 	multierror "github.com/hashicorp/go-multierror"
-	"reflect"
 )
 
 // Table 设置表名
