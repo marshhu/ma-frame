@@ -12,16 +12,22 @@ import (
 )
 
 type App struct {
-	Engine   *gin.Engine
-	HostPort int
+	Config AppConfig
+	Engine *gin.Engine
+}
+
+type AppConfig struct {
+	HostPort     int
+	ReadTimeout  int
+	WriteTimeout int
 }
 
 var Instance *App
 
 //构建App
-func NewApp(hostPort int) *App {
+func NewApp(config AppConfig) *App {
 	app := &App{
-		HostPort: hostPort,
+		Config: config,
 	}
 	Instance = app
 	return Instance
@@ -36,12 +42,12 @@ func (a *App) RegisterRouter(router func(eng *gin.Engine) error) *App {
 
 //启动服务
 func (a *App) Run() {
-	host := fmt.Sprintf(":%d", a.HostPort)
+	host := fmt.Sprintf(":%d", a.Config.HostPort)
 	s := &http.Server{
 		Addr:           host,
 		Handler:        a.Engine,
-		ReadTimeout:    time.Duration(60) * time.Second,
-		WriteTimeout:   time.Duration(60) * time.Second,
+		ReadTimeout:    time.Duration(a.Config.ReadTimeout) * time.Second,
+		WriteTimeout:   time.Duration(a.Config.WriteTimeout) * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {
