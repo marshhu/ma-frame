@@ -3,8 +3,6 @@ package orm
 import "github.com/hashicorp/go-multierror"
 
 func (t *MaDB) Create(entityPtr interface{}) error {
-	Validate(entityPtr, "structPtr", true)
-
 	clone := t.db.Create(entityPtr)
 	if clone.Error != nil {
 		t.Error = multierror.Append(t.Error, clone.Error)
